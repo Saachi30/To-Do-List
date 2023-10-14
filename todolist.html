@@ -8,91 +8,11 @@
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
     <title>ToDo's List</title>
-    <style>
-        .container {
-            width: 65% !important;
-        }
-
-        #align {
-            display: flex;
-        }
-
-        #searchimg {
-            height: 20px;
-            margin-bottom: 8px;
-            margin-left: 3px;
-
-        }
-
-        #searchbar {
-            margin-left: 523px;
-            margin-top: 10px;
-        }
-
-        #searchtext {
-            padding: 3px 2px;
-            font-weight: bold;
-            border-radius: 7px;
-        }
-
-        #datetime {
-            display: flex;
-            margin-bottom: 20px;
-
-        }
-
-        .date {
-            margin-right: 190px;
-        }
-
-        .time {
-            margin-left: 255px;
-        }
-
-        .datesmall {
-            margin-left: 7px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">ToDo</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Items
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Contact</a>
-                </li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-        </div>
-    </nav> -->
+   
     <div class="container my-4">
 
         <h2 class="text-center">ToDo's List</h2>
@@ -177,97 +97,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
-    <script>
+    <script src="index.js"></script>
 
-        function getAndUpdate() {
-            console.log("Updating List...");
-            tit = document.getElementById('title').value;
-            desc = document.getElementById('description').value;
-            date = document.getElementById('date').value;
-            time = document.getElementById('time').value;
-
-            if (localStorage.getItem('itemsJson') == null) {
-                itemJsonArray = [];
-                itemJsonArray.push([tit, desc, date, time]);
-                localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray))
-            }
-            else {
-                itemJsonArrayStr = localStorage.getItem('itemsJson')
-                itemJsonArray = JSON.parse(itemJsonArrayStr);
-                itemJsonArray.push([tit, desc, date, time]);
-                localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray))
-            }
-
-            $('.form-group').children('input').val('');
-            $('.form-group').children('textarea').val('');
-
-            update();
-        }
-
-        function update() {
-            if (localStorage.getItem('itemsJson') == null) {
-                itemJsonArray = [];
-                localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray))
-            }
-            else {
-                itemJsonArrayStr = localStorage.getItem('itemsJson')
-                itemJsonArray = JSON.parse(itemJsonArrayStr);
-            }
-
-            let tableBody = document.getElementById("tableBody");
-            let str = "";
-            itemJsonArray.forEach((element, index) => {
-                str += `
-                    <tr>
-                    <th scope="row">${index + 1}</th>
-                    <td id = "titletext">${element[0]}</td>
-                    <td id = "desctext">${element[1]}</td> 
-                    <td id="datetext">${element[2]}</td>
-                    <td id="timetext">${element[3]}</td>
-                    <td><button class="btn btn-sm btn-danger" onclick="deleted(${index})">Delete</button></td> 
-                    </tr>`;
-            });
-            tableBody.innerHTML = str;
-        }
-        add = document.getElementById("add");
-        add.addEventListener("click", getAndUpdate);
-        update();
-        function deleted(itemIndex) {
-            console.log("Deleted task ", itemIndex + 1);
-            itemJsonArrayStr = localStorage.getItem('itemsJson')
-            itemJsonArray = JSON.parse(itemJsonArrayStr);
-
-            itemJsonArray.splice(itemIndex, 1);
-            localStorage.setItem('itemsJson', JSON.stringify(itemJsonArray));
-            update();
-
-        }
-        const search = () => {
-            let filter = document.getElementById('searchtext').value.toUpperCase();
-            let tr = document.getElementsByTagName('tr');
-
-            for (let i = 0; i < tr.length; i++) {
-                let td = tr[i].getElementsByTagName('td')[0];
-                if (td) {
-                    let textvalue = td.textContent || td.innerHTML;
-                    if (textvalue.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                    }
-                    else {
-                        tr[i].style.display = "none";
-                    }
-                }
-            }
-
-        }
-        function clearStorage() {
-            if (confirm("Do you really want to clear the list?")) {
-                console.log('Clearing the storage')
-                localStorage.clear();
-                update()
-            }
-        }
-    </script>
+        
+    
 </body>
 
 </html>

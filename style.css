@@ -1,0 +1,43 @@
+.container {
+    width: 65% !important;
+}
+
+#align {
+    display: flex;
+}
+
+#searchimg {
+    height: 20px;
+    margin-bottom: 8px;
+    margin-left: 3px;
+
+}
+
+#searchbar {
+    margin-left: 523px;
+    margin-top: 10px;
+}
+
+#searchtext {
+    padding: 3px 2px;
+    font-weight: bold;
+    border-radius: 7px;
+}
+
+#datetime {
+    display: flex;
+    margin-bottom: 20px;
+
+}
+
+.date {
+    margin-right: 190px;
+}
+
+.time {
+    margin-left: 255px;
+}
+
+.datesmall {
+    margin-left: 7px;
+}
